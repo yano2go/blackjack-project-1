@@ -117,4 +117,4 @@ function startBlackJack() {
           playerBet -= playerBank
      }
 }
-//    playerBank() =  .
+//     playerBank() =  .
