@@ -80,7 +80,13 @@ function startBlackJack() {
      const playerHand = new deck(0);
      const dealerHand = new deck(0);
      const cardDeck = new deckSize(52);
-
+     const cardValues = [['2', 2], ['3', 3] , ['4', 4], ['5', 5], ['6', 6], ['7', 7], ['8', 8], ['9', 9], ['10', 10], ['J', 10], ['K', 10], ['Q', 10], ['A', [1, 11]]];
+     const suitValue = ['ace', 'clubs', 'hearts', 'diamonds'];
+     for(let i =0; i < suitValue.length; i++){
+          for( let j = 0; j < cardValues.length; j++){
+          // jquery add object with value of current suit and card value
+          }
+     }
 
      player.playerBet = prompt("enter your bet amount")
      while (player.playerBet > player.playerCash || player.playeBet.NaN == true) {
@@ -90,19 +96,18 @@ function startBlackJack() {
 
 
      while (player.playerCardValue <= 21 && dealer.maxValue <= 18) {
-
-
-
+          //if player presses hit button draw  a new card/
+          // if player goes over 21  display you lose and subtract bet
+          // if player wins  display win and add bet
      }
 
+     $stayButton(){
+     ('#stay").on("click", $stayButton())
+          if (player )
+} 
 
-     // starter jquery notes
-     //  $stayButton(){
-     //     ('#stay").on("click", $stayButton())
-     // }  if (playerCardValue < 21 && player pushes stayButton dealer hits until dealer card value is > 17
 
-
-     checkWin()
+     checkWin() 
      if (checkWin === true) {
           playerBet += playerBank
      }
@@ -112,4 +117,4 @@ function startBlackJack() {
           playerBet -= playerBank
      }
 }
-//    playerBank() = 
+//    playerBank() = .
