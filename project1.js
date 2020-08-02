@@ -1,96 +1,115 @@
-let cardValues = [
-          [2, 2],
-          [3, [3, [4, 4],
-                    [5, 5],
-                    [6, 6],
-                    [7, 7],
-                    [8, 8],
-                    [9, 9],
-                    [10, 10],
-                    [j, 10],
-                    [K, K],
-                    [Q, 10],
-                    [A, [1, 11]]
-                    let suits = [hearts, diamonds, spades, clubs];
-                    let
-                         class GameRules {
-                              constructor() {
-                                   this.maxValue = 21
-                                   this.roundWin
-                                   this.roundlose
+// let cardValues = [
+//           ['2', 2, 'hearts'],
+//           ['3', 3, "hearts"],
+//           ['4', 4, 'hearts'],
+//           ['5', 5, 'hearts'],
+//           ['6', 6, 'hearts'],
+//           ['7', 7, 'hearts'],
+//           ['8', 8, 'hearts'],
+//           ['9', 9, 'hearts'],
+//           ['10', 10, 'hearts'],
+//           ['j', 10, 'hearts'],
+//           [K, 10],
+//           [Q, 10],
+//           [A, [1, 11]];
 
-                              }
-                              checkWin() {
-                                   if (playerCardValue >= dealerCardValue && playerCardValue >= 21); {
-                                        console.log("you win")
-                                   }
-                                   checkLose() {
-                                        if (playerCardValue < dealerCardValue && dealerCardValue <= 21) {
-                                             console.log("you lose");
-                                        }
-                                   }
+class GameRules {
+     constructor() {
+          this.maxValue = 21
+          this.roundWin
+          this.roundlose
 
-                              }
-                         }
-
-                    class player {
-                         constructor(playerCash, playerCardValue, playerBet) {
-                              this.playerCash = 100
-                              this.playerCardValue = null
-                              this.playerBet = null
-                              this.hit = //+ 1 card
-                         }
-                         playerWin(playerCash) += this.playerBet;
-                    }
-                    playerLose(playerCash) -= this.playerBet;
-
+     }
+     checkWin() {
+          if (playerCardValue >= dealerCardValue && playerCardValue >= 21) {
+               console.log("you win");
+          }
+          checkLose(); {
+               if (playerCardValue < dealerCardValue && dealerCardValue <= 21) {
+                    console.log("you lose");
                }
-               class dealer {
-                    constructor() {
-                         this.maxValue = 18
+          }
+
+     }
+}
+
+class deck {
+     constructor(deckSize) {
+          this.deckSize = new Array(deckSize);
 
 
-                    }
-               }
+     }
+
+}
+
+
+class player {
+     constructor() {
+          this.playerCash = 100
+          this.playerCardValue = 0
+          this.playerBet = null
+     }
+     playerWin() {
+
+          this.playerCash += this.playerBet;
+     }
+     playerLose() {
+          this.playerCash -= this.playerBet;
+     }
+}
+
+
+class dealer {
+     constructor() {
+          this.maxValue = 18
+
+
+     }
+}
+
+function shuffle() {
+     for (let i = 0; i < 1000; i++) {
+          let position1 = Math.floor((math.random() * deck.length))
+          let position2 = Math.floor((math.random() * deck.length))
+     }
+}
+
+function startBlackJack() {
+     const player = new player();
+     const dealer = new dealer();
+     const playerHand = new deck(0);
+     const dealerHand = new deck(0);
+     const cardDeck = new deckSize(52);
+
+
+     player.playerBet = prompt("enter your bet amount")
+     while (player.playerBet > player.playerCash || player.playeBet.NaN == true) {
+          alert("you dont have anough money");
+          player.playerBet = prompt("enter your bet amount");
+     }
+
+
+     while (player.playerCardValue <= 21 && dealer.maxValue <= 18) {
 
 
 
-               // j query removes card from deck
-               // // function shuffle()
-               // // // use math.randon and math.floor to shuffle the array of cards.
-               // create a new variable called deck
-
-               function startBlackJack()
-               const player = new player();
-               const dealer = new dealer();
-
-               player.playerBet = prompt("enter your bet amount")
-               while (player.playerBet > player.playerCash || player.playeBet.NaN == true) {
-                    alert("you dont have anough money");
-                    player.playerBet = prompt("enter your bet amount");
-               }
-
-               while (player.playerCardValue <= 21 && dealer.maxValue <= 18) {
-                    drawCard()
+     }
 
 
-               }
+     // starter jquery notes
+     //  $stayButton(){
+     //     ('#stay").on("click", $stayButton())
+     // }  if (playerCardValue < 21 && player pushes stayButton dealer hits until dealer card value is > 17
 
 
-               // // dealCards(deck) //jquery
+     checkWin()
+     if (checkWin === true) {
+          playerBet += playerBank
+     }
 
-               // stayButton()
-               // if playerCardValue < 21 && player pushes stayButton dealer hits until dealer card value is > 17
-
-               // checkWin()
-
-               // if checkWin === true
-               // playerBet += playerBank
-
-               // check lose === true
-               // playerBet -= playerBank
-
-               // // function playerBank()
-
-
-               // loop back to beginning of the game but rentain player bank
+     checkLose()
+     if (checkLose === true) {
+          playerBet -= playerBank
+     }
+}
+//    playerBank() = 
