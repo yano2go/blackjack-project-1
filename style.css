@@ -1,0 +1,47 @@
+* {
+     box-sizing: border-box;
+}
+body {
+     margin: 0;
+     flex-direction: column;
+}
+#flexbox{
+     display: flex;
+     min-height: calc(100vh - 40vh);
+}
+#flexbox > article {
+     display: flex;
+     flex: 1;
+     flex-direction: column;
+     background-color: green;
+}
+img.one {
+     height: 70%;
+     width: 70%;
+}
+#flexbox > aside {
+     display: flex;
+     flex: 0 0 20vw;
+     background-color: green;
+     flex-direction: column;
+}
+#flexbox > nav {
+     display: flex;
+     order: -1;
+     justify-content: left;
+     flex-direction: column;
+     background-color: black;
+     flex: 0 20vh 20vw;
+}
+#footerbox > footer {
+     object-fit: cover;
+}
+header, footer, article, nav, aside {
+     padding: 1em;
+}
+
+header, footer {
+     background: green;
+     height: 15vh;
+}
+
