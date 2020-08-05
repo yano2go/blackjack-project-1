@@ -1,25 +1,9 @@
-// class GameRules {
-//      constructor() {
-//           this.maxValue = 21
-//           this.roundWin
-//           this.roundlose
-
-//      }
-//      checkWin(player, playerCardValue, dealerCardValue) {
-//           if (playerCardValue >= dealerCardValue && playerCardValue >= 21) {
-//                console.log("you win");
-//                player.playerCash += player.playerBet
-
-//           }
-//      }
-//      checkLose(playerCardValue, dealerCardValue, player) {
-//           if (playerCardValue < dealerCardValue && dealerCardValue <= 21) {
-//                console.log("you lose");
-//                player.playerCash -= player.playerBet
-//           }
-//      }
-
-// }
+// ira these are the things i need help with
+// fix hit me button
+// fix cards not showing
+//finish start black jack by adding play again function
+// is shift the right way to pull deck[0].filename
+//display bank acount
 
 
 
@@ -318,11 +302,15 @@ function dealCards(playerHand, deck) {
 
 }
 
-function hitMe(playerHand, deck) {
+function hitMe(playerHand, dealerHand, deck) {
      console.log("im clicked");
      shuffle(deck);
      deck[0].filename;
      dealCards(playerHand, deck);
+     if (dealerHand < 16){
+          dealCards(dealerHand, deck);
+          deck[1].filename;
+     }
 }
 
 
