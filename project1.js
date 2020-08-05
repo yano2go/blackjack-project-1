@@ -345,7 +345,7 @@ $(() => {
 
   function dealCards(playerOrDealer) {
     let path = "./playingcards/" + deck[0].filename;
-    $("#gameboard").prepend('<svg src= "{path}"/>');
+    $("#gameboard").prepend(`<img src="${path}"/>`);
 
     if (playerOrDealer === "player") {
       playerHand.push(deck[0]);
