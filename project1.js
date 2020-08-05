@@ -1,29 +1,29 @@
-class GameRules {
-     constructor() {
-          this.maxValue = 21
-          this.roundWin
-          this.roundlose
+// class GameRules {
+//      constructor() {
+//           this.maxValue = 21
+//           this.roundWin
+//           this.roundlose
 
-     }
-     checkWin(player, playerCardValue, dealerCardValue) {
-          if (playerCardValue >= dealerCardValue && playerCardValue >= 21) {
-               console.log("you win");
-               player.playerCash += player.playerBet
+//      }
+//      checkWin(player, playerCardValue, dealerCardValue) {
+//           if (playerCardValue >= dealerCardValue && playerCardValue >= 21) {
+//                console.log("you win");
+//                player.playerCash += player.playerBet
 
-          }
-     }
-     checkLose(playerCardValue, dealerCardValue, player) {
-          if (playerCardValue < dealerCardValue && dealerCardValue <= 21) {
-               console.log("you lose");
-               player.playerCash -= player.playerBet
-          }
-     }
+//           }
+//      }
+//      checkLose(playerCardValue, dealerCardValue, player) {
+//           if (playerCardValue < dealerCardValue && dealerCardValue <= 21) {
+//                console.log("you lose");
+//                player.playerCash -= player.playerBet
+//           }
+//      }
 
-}
+// }
 
 
 
-class Player {
+class playerperson {
      constructor() {
           this.playerCash = 100
           this.playerCardValue = 0
@@ -39,28 +39,44 @@ class Player {
 }
 
 
-class Dealer {
-     constructor() {
-          this.maxValue = 18
 
 
+
+function betMoney(player) {
+     //fix by connecting player bet and cash
+     let playerBet = prompt("enter your bet amount");
+     while (playerBet > player.playerCash) {
+          alert("you dont have anough money");
+          playerBet = prompt("enter your bet amount");
+
+     }
+     return playerBet;
+}
+
+
+function shuffle(deck) {
+     for (let i = 0; i < 1000; i++) {
+          let position1 = Math.floor((Math.random() * deck.length))
+          let position2 = Math.floor((Math.random() * deck.length))
+          let entry1 = deck[position1];
+          let entry2 = deck[position2];
+          deck[position1] = entry2;
+          deck[position2] = entry1;
      }
 }
 
-function shuffle() {
-     for (let i = 0; i < 1000; i++) {
-          let position1 = Math.floor((math.random() * deck.length))
-          let position2 = Math.floor((math.random() * deck.length))
-     }
+function endgame(continueGame) {
+     continueGame = false;
 }
 
 function startBlackJack() {
-     prompt("Are you ready to win some big time high roller money?");
-     const Player = new player();
-     const Dealer = new dealer();
-     const playerHand = new deck(0);
-     const dealerHand = new deck(0);
-     const betMoney = betMoney()
+     prompt('are you ready to make some big high roller money?')
+     $('.one').fadeOut();
+     const player = new playerperson();
+     const dealer = new playerperson();
+     const playerHand = new Array();
+     const dealerHand = new Array();
+     player.playerBet = betMoney(player);
      let deck = [{
                name: "2 of Clubs",
                value: 2,
@@ -269,60 +285,69 @@ function startBlackJack() {
           {
                name: "queen of spades",
                value: 10,
-               filename: "queen_of_spades,svg"
+               filename: "queen_of_spades.svg"
           }
      ]
      dealCards(playerHand, deck);
      dealCards(dealerHand, deck);
-     player.playerCardValue = playerHand[0].value;
-     dealer.dealerCardValue = dealerHand[0].value;
+     dealCards(playerHand, deck);
+     dealCards(dealerHand, deck);
+     player.playerCardValue += playerHand[0].value;
+     dealer.dealerCardValue += dealerHand[0].value;
+     player.playerCardValue += playerHand[1].value;
+     dealer.dealerCardValue += dealerHand[1].value;
      let continueGame = true;
      while (player.playerCardValue < 22 && dealer.dealerCardValue < 16 && continueGame == true) {
-          hitMe(playerHand, cardValues);
+          $('.hit').on('click', hitMe(playerHand, deck));
+          $('.nomore').on('click', endgame(continueGame));
+          
+
      }
 
-     checkWin(player, playerCardValue, dealerCardValue);
-     checkLose(playerCardValue, dealerCardValue, player);
-}
-
-function betMoney() {
-     let playerBet = prompt("enter your bet amount");
-     while (player.playerBet > player.playerCash) {
-          alert("you dont have anough money");
-          player.playerBet = prompt("enter your bet amount");
-     }
+     checkWin(playerHand, dealerHand, player);
 }
 
 
-function dealCards(playerHand, cardValues) {
-     cardValues.shuffle();
-     playerHand.push(cardValues[0]);
-     cardValues.shift();
-}
 
-function hitMe(playerHand, cardValues, continueGame) {
-     while (hitMe === true);
-     dealCards(playerHand, cardValues);
-     if (playerResponse === true) {
-          hitMe = true
-     } else {
-          hitMe = false
-          return continueGame = false
-     }
+function dealCards(playerHand, deck) {
+     let path = "./playingcards/" + deck[0].filename;
+     $('#gameboard').prepend('<svg src= "{path}"/>');
+     
+     playerHand.push(deck[0]);
+     deck.shift();
 
 }
+
+function hitMe(playerHand, deck) {
+     console.log("im clicked");
+     shuffle(deck);
+     deck[0].filename;
+     dealCards(playerHand, deck);
+}
+
 
 function stay(playerHand, dealerHand, player) {
      checkWin(playerHand, dealerHand, player);
-     checkLose(playrerHand, dealerHand, player);
-
 }
 
-// checkWin(playerHand, dealerHand, player);
-// if (checkWin === true) {
-//      playerBet += playerBank
-// }
-// checkLose()playerHand, dealerHand, player);
-// if (checkLose === true) {
-//      playerBet -= playerBank
-// }
+function checkWin(playerHand, dealerHand, player) {
+     let totalCardValue = 0;
+     let dealerCardValue= 0;
+     for (let i = 0; i < playerHand.length; i++) {
+          totalCardValue += playerHand[i].value;
+     }for (let i = 0; i < dealerHand.length; i++) {
+          dealerCardValue += dealerHand[i].value;
+     }
+     if (totalCardValue <= 21 && dealerCardValue < totalCardValue){
+          player.playerWin(); 
+     }
+     else{
+          player.playerLose();
+     }
+}
+
+function checkLose(playerHand, dealerHand, player) {
+     if (checkLose === true) {
+          playerBet -= playerBank
+     }
+}
