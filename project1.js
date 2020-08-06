@@ -452,7 +452,7 @@ $(() => {
   }
 
 
-  // Attach listeners:
+  // Attach listen ers:
   // Removed () so they don't invoke at runtime
 
   $("#start-game1").on("click", () => {
