@@ -282,7 +282,6 @@ $(() => {
       this.playerCardValue = 0;
       this.playerBet = null;
       this.playerName = name;
-      this.playerNumberOfCards = 0;
     }
     playerWin() {
       this.playerCash += this.playerBet;
@@ -299,12 +298,13 @@ $(() => {
     //fix by connecting player bet and cash
     let playerBet = 0;
     let playerCash = player.playerCash
-    playerBet = prompt("enter your bet amount");
+    let betMoneyPrompt = "You have " + playerCash + " dollars. How much do you want to bet?"
+    playerBet = prompt(betMoneyPrompt);
     while (playerBet > playerCash) {
       console.log('while loop is triggered');
       if (playerBet > playerCash) {
         alert("you dont have anough money");
-        playerBet = prompt("enter your bet amount");
+        playerBet = prompt(betMoneyPrompt);
 
       }
     }
@@ -333,8 +333,15 @@ $(() => {
     $(".one").fadeOut();
     playerHand = [];
     dealerHand = [];
-    player = new playerperson("player");
-    dealer = new playerperson("dealer");
+    if (player === undefined && dealer === undefined) { 
+      player = new playerperson("player");
+      dealer = new playerperson("dealer");
+    }
+    else{
+      player.playerCardValue = 0;
+      dealer.playerCardValue = 0;  
+    }
+    player.playerBet = null;
     while (player.playerBet == null) {
       betMoney(player);
     }
@@ -369,10 +376,6 @@ $(() => {
   }
 
 
-
-
-
-
   function dealCards(playerOrDealer) {
     shuffle();
     let filename = deck[0].filename;
@@ -381,6 +384,7 @@ $(() => {
     let playerName = playerOrDealer.playerName;
     let playerBoard = playerName + "board";
     $(`#${playerBoard}`).prepend(`<img src="${path}"/>`);
+    console.log('img added');
     let card = deck[0];
     console.log("value of card: " + value)
     if (playerName == "player") {
@@ -409,6 +413,7 @@ $(() => {
 
      if (dealer.playerCardValue < 16) {
       dealCards(dealer);
+    
     }
     if (dealer.playerCardValue > 21) {
       checkWin(player, dealer);
