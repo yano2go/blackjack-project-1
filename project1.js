@@ -285,9 +285,11 @@ $(() => {
     }
     playerWin() {
       this.playerCash += this.playerBet;
+      console.log("you win");
     }
     playerLose() {
       this.playerCash -= this.playerBet;
+      console.log("you lose");
     }
   }
 
@@ -302,7 +304,7 @@ $(() => {
       if (playerBet > playerCash) {
         alert("you dont have anough money");
         playerBet = prompt("enter your bet amount");
-     
+
       }
     }
     return playerBet;
@@ -343,11 +345,10 @@ $(() => {
     dealer.dealerCardValue += $(`${dealerHand}`)[0['value']];
     player.playerCardValue += $(`${playerHand}`)[1['value']];
     dealer.dealerCardValue += $(`${dealerHand}`)[1['value']];
-    let continueGame = true;
+  
     while (
-      player.playerCardValue < 22 &&
-      dealer.dealerCardValue < 16 &&
-      continueGame == true
+      player.playerCardValue <= 21 &&
+      dealer.dealerCardValue <= 16    
     ) {
 
       $('#bet').on('click', () => {
@@ -356,23 +357,28 @@ $(() => {
       });
       $('#hit').on('click', () => {
         console.log("test hit ")
-        hitMe(playerHand, dealerHand, player, dealer)
- 
+        hitMe(playerHand, player, dealer)
+
       });
       $('#nomore').on('click', () => {
         console.log('test stay')
-        stay(playerHand, dealerHand, player)
+        stay(player, dealer)
 
       });
 
-
     }
+    
 
-    checkWin(playerHand, dealerHand, player);
   }
+
+
+
+
+
 
   function dealCards(playerOrDealer, playerHand) {
     let filename = deck[0].filename;
+    let value = deck[0].value;
     let path = "./playingcards/" + filename;
     let playerName = playerOrDealer.playerName;
     let playerBoard = playerName + "board";
@@ -380,38 +386,49 @@ $(() => {
     shuffle(deck);
     let card = deck[0];
     $(`${playerHand}`).push(card);
-    
+    playerOrDealer.playerCardValue += value;
     deck.shift();
   }
 
   function hitMe(playerHand, dealerHand, player, dealer) {
     console.log("im clicked");
     shuffle(deck);
-    deck[0].filename;
     dealCards(player, playerHand);
-    if (dealerHand < 16) {
-      dealCards(dealer, dealerHand);
-      deck[1].filename;
-    }
-  }
-
-  function stay(playerHand, dealerHand, player) {
-    checkWin(playerHand, dealerHand, player);
-  }
-
-  function checkWin(playerHand, dealerHand, player) {
-    let totalCardValue = 0;
-    let dealerCardValue = 0;
-    for (let i = 0; i < playerHand.length; i++) {
-      totalCardValue += playerHand[i].value;
-    }
-    for (let i = 0; i < dealerHand.length; i++) {
-      dealerCardValue += dealerHand[i].value;
-    }
-    if (totalCardValue <= 21 && dealerCardValue < totalCardValue) {
-      player.playerWin();
-    } else {
+    if (player.playerCardValue > 21){
       player.playerLose();
+    }
+    
+    if (dealer.playerCardValue < 16) {
+      dealCards(dealer, dealerHand);
+    } 
+    if(dealer.playerCardValue > 21){
+      player.playerWin();
+    }
+    if (player.playerCardValue > 21 || dealer.playerCardValue > 21){
+      let playerCardValue = player.playerCardValue;
+      let dealerCardValue = dealer.playerCardValue;
+      checkWin(playerCardValue,dealerCardValue);
+    }
+  }
+
+  function stay(player, dealer) {
+    if (player.playerCardValue > dealer.playerCardValue){
+      player.playerWin();
+      
+    }else{
+      player.playerLose();
+    }
+    
+  }
+
+  function checkWin(player, dealer) {
+    if (dealer > 21 || player > dealer && player <= 21) {
+      //player.playerWin();
+      console.log("you win");
+
+    } else {
+      //player.playerLose();
+      console.log("you lose");
     }
   }
 
@@ -430,6 +447,6 @@ $(() => {
     hitMe(playerHand, dealerHand, player, dealer)
   });
   $("#nomore").off().on("click", () => {
-    stay(playerHand, dealerHand, player)
+    stay(player, dealer);
   }); // TODO: Fix this
 });
