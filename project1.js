@@ -282,14 +282,15 @@ $(() => {
       this.playerCardValue = 0;
       this.playerBet = null;
       this.playerName = name;
+      this.playerNumberOfCards = 0;
     }
     playerWin() {
       this.playerCash += this.playerBet;
-      console.log("you win");
+      alert("you win");
     }
     playerLose() {
       this.playerCash -= this.playerBet;
-      console.log("you lose");
+      alert("you lose");
     }
   }
 
@@ -307,7 +308,7 @@ $(() => {
 
       }
     }
-    return playerBet;
+    player.playerBet = playerBet;
   }
 
   function shuffle() {
@@ -327,10 +328,16 @@ $(() => {
   }
 
   function startBlackJack() {
-    prompt("are you ready to make some big high roller money?");
+    $(`#${"playerboard"}`).empty();
+    $(`#${"dealerboard"}`).empty();
     $(".one").fadeOut();
+    playerHand = [];
+    dealerHand = [];
     player = new playerperson("player");
     dealer = new playerperson("dealer");
+    while (player.playerBet == null) {
+      betMoney(player);
+    }
     //player.playerBet = betMoney(player);
 
     dealCards(player, playerHand);
@@ -341,33 +348,23 @@ $(() => {
     console.log('test');
     dealCards(dealer, dealerHand);
     console.log('test');
-    player.playerCardValue += $(`${playerHand}`)[0['value']];
-    dealer.dealerCardValue += $(`${dealerHand}`)[0['value']];
-    player.playerCardValue += $(`${playerHand}`)[1['value']];
-    dealer.dealerCardValue += $(`${dealerHand}`)[1['value']];
-  
-    while (
-      player.playerCardValue <= 21 &&
-      dealer.dealerCardValue <= 16    
-    ) {
 
-      $('#bet').on('click', () => {
-        console.log('test bet')
-        betMoney(player)
-      });
-      $('#hit').on('click', () => {
-        console.log("test hit ")
-        hitMe(playerHand, player, dealer)
 
-      });
-      $('#nomore').on('click', () => {
-        console.log('test stay')
-        stay(player, dealer)
 
-      });
 
-    }
-    
+    $('#hit').on('click', () => {
+      console.log("test hit ")
+      hitMe(playerHand, dealerHand, player, dealer)
+
+    });
+    $('#nomore').on('click', () => {
+      console.log('test stay')
+      stay(player, dealer)
+
+    });
+
+
+
 
   }
 
@@ -376,77 +373,85 @@ $(() => {
 
 
 
-  function dealCards(playerOrDealer, playerHand) {
+  function dealCards(playerOrDealer) {
+    shuffle();
     let filename = deck[0].filename;
     let value = deck[0].value;
     let path = "./playingcards/" + filename;
     let playerName = playerOrDealer.playerName;
     let playerBoard = playerName + "board";
     $(`#${playerBoard}`).prepend(`<img src="${path}"/>`);
-    shuffle(deck);
     let card = deck[0];
-    $(`${playerHand}`).push(card);
+    console.log("value of card: " + value)
+    if (playerName == "player") {
+      $(`${playerHand}`).push(card);
+      playerOrDealer.playerCardValue += value;
+      deck.shift();
+    }
+    else{
+      $(`${dealerHand}`).push(card);
     playerOrDealer.playerCardValue += value;
     deck.shift();
   }
+    
+  }
+
 
   function hitMe(playerHand, dealerHand, player, dealer) {
     console.log("im clicked");
     shuffle(deck);
-    dealCards(player, playerHand);
-    if (player.playerCardValue > 21){
-      player.playerLose();
+    dealCards(player);
+    console.log(player.playerCardValue)
+    if (player.playerCardValue > 21) {
+      checkWin(player, dealer);
+      return
     }
-    
-    if (dealer.playerCardValue < 16) {
-      dealCards(dealer, dealerHand);
-    } 
-    if(dealer.playerCardValue > 21){
-      player.playerWin();
+
+     if (dealer.playerCardValue < 16) {
+      dealCards(dealer);
     }
-    if (player.playerCardValue > 21 || dealer.playerCardValue > 21){
+    if (dealer.playerCardValue > 21) {
+      checkWin(player, dealer);
+      return
+    }
+    if (player.playerCardValue > 21 || dealer.playerCardValue > 21) {
       let playerCardValue = player.playerCardValue;
       let dealerCardValue = dealer.playerCardValue;
-      checkWin(playerCardValue,dealerCardValue);
+      checkWin(player, dealer);
+      return
     }
   }
 
   function stay(player, dealer) {
-    if (player.playerCardValue > dealer.playerCardValue){
-      player.playerWin();
-      
-    }else{
-      player.playerLose();
+    if (player.playerCardValue > dealer.playerCardValue) {
+      checkWin(player, dealer);
+
+    } else {
+      checkWin(player, dealer);
     }
-    
+
   }
 
   function checkWin(player, dealer) {
-    if (dealer > 21 || player > dealer && player <= 21) {
-      //player.playerWin();
+    let playerCardValue = player.playerCardValue
+    let dealerCardValue = dealer.playerCardValue
+    if (dealerCardValue > 21 || (playerCardValue > dealerCardValue && playerCardValue <= 21)) {
+      player.playerWin();
       console.log("you win");
 
     } else {
-      //player.playerLose();
+      player.playerLose();
       console.log("you lose");
     }
+    startBlackJack();
   }
 
 
   // Attach listeners:
   // Removed () so they don't invoke at runtime
 
-  $("#start-game1").off().on("click", () => {
+  $("#start-game1").on("click", () => {
     console.log("clicked")
     startBlackJack()
   });
-  $("#bet").off().on("click", () => {
-    betMoney(player)
-  });
-  $("#hit").off().on("click", () => {
-    hitMe(playerHand, dealerHand, player, dealer)
-  });
-  $("#nomore").off().on("click", () => {
-    stay(player, dealer);
-  }); // TODO: Fix this
 });
