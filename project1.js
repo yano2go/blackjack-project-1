@@ -2,7 +2,7 @@
 // fix hit me button
 // fix cards not showing
 //finish start black jack by adding play again function
-// is shift the right way to pull deck[0].filename
+// is shift the  right way to pull deck[0].filename
 //display bank acount
 
 // Wrapped whole thing in jQuery document ready to wait for dom to load before firing
